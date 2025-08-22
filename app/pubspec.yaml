@@ -1,0 +1,16 @@
+name: badminton_app
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.1
+  cloud_firestore: ^5.4.4
+  firebase_core: ^3.5.0
+  http: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
