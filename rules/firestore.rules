@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function hasRole(role) {
+      return request.auth.token.roles != null
+        && request.auth.token.roles[role] == true;
+    }
+    match /tournaments/{tid} {
+      allow read: if true;
+      allow create: if hasRole('organizer');
+      allow update, delete: if hasRole('organizer');
+
+      match /teams/{teamId} {
+        allow read: if true;
+        allow write: if hasRole('organizer');
+      }
+      match /fixtures/{fid} {
+        allow read: if true;
+        allow write: if hasRole('organizer');
+      }
+      match /matches/{mid} {
+        allow read: if true;
+        allow write: if hasRole('organizer') || hasRole('referee');
+      }
+    }
+    match /public/{tid}/live/{court} {
+      allow read: if true;
+      allow write: if hasRole('organizer') || hasRole('referee');
+    }
+  }
+}
